@@ -7,7 +7,7 @@ processus <- function(n, cas, taille_popu = 3 * n, p=0.5) {
   pivot_M2 <- 0
   
   # Simulation of the choice of voters
-  vec_etat <- switch(cas, IC = rbinom(3, n, p), IAC_star = rbinom(3, n, runif(3)))
+  vec_etat <- switch(cas, IC = rbinom(3, n, p), IAC_star = rbinom(3, n, runif(3)), Chinese_Res = )
   
   # Vainqueur de l'élection M1
   vote_popu <- sum(vec_etat)
@@ -54,10 +54,14 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       numericInput("Size", "Size of population:", value =5),
-      selectInput("Option", "Probabilistic Model:", choices = c("IC", "IAC_star")),
+      selectInput("Option", "Probabilistic Model:", choices = c("IC", "IAC_star", "Chinese_Res")),
       conditionalPanel(
         condition = "input.Option == 'IC'",
         numericInput("Prob", "Probability:", value =0.5)
+      ),
+      conditionalPanel(
+        condition = "input.Option == 'Chinese_Res'",
+        numericInput("Theta", "Theta:", value = 1)
       ),
       numericInput("Rep", "Number of replications:", value =100000),
       selectInput("PlotType", "Type of Output:", choices = c("Histogram", "Table"))
